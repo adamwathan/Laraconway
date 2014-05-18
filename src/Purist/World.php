@@ -1,17 +1,19 @@
 <?php
 
-namespace Laraconway\Pragmatic;
+namespace Laraconway\Purist;
 
 class World
 {
     protected $positions = [];
     protected $numRows;
     protected $numColumns;
+    protected $cell_factory;
 
-    public function __construct($rows = 25, $columns = 25)
+    public function __construct($rows, $columns, $cell_factory)
     {
         $this->numRows = $rows;
         $this->numColumns = $columns;
+        $this->cell_factory = $cell_factory;
 
         for ($x = 0; $x < $rows; $x++) {
             for ($y = 0; $y < $columns; $y++) {
@@ -20,19 +22,19 @@ class World
         }
     }
 
-    public static function create($rows = 25, $columns = 25)
+    public static function create($rows, $columns, $cell_factory)
     {
-        return new static($rows, $columns);
+        return new static($rows, $columns, $cell_factory);
     }
 
     public function setAliveAt($x, $y)
     {
-        $this->positions[$x][$y] = Cell::alive();
+        $this->positions[$x][$y] = $this->cell_factory->alive();
     }
 
     public function setDeadAt($x, $y)
     {
-        $this->positions[$x][$y] = Cell::dead();
+        $this->positions[$x][$y] =  $this->cell_factory->dead();
     }
 
     public function livingAt($x, $y)
@@ -40,7 +42,7 @@ class World
         if ($x < 0 || $y < 0 || $x > $this->numRows - 1  || $y > $this->numColumns - 1) {
             return false;
         }
-        return $this->positions[$x][$y] == Cell::alive();
+        return $this->getCell($x, $y)->isAlive();
     }
 
     public function tick()
@@ -57,7 +59,7 @@ class World
     protected function nextStateAt($x, $y)
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
-        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours) ? Cell::alive() : Cell::dead();
+        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours) ?  $this->cell_factory->alive() :  $this->cell_factory->dead();
     }
 
     protected function getCell($x, $y)

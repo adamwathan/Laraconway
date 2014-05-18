@@ -7,8 +7,8 @@ class WorldTest extends \PHPUnit_Framework_TestCase
     public function test_can_place_living_cell()
     {
         $world = new World;
-        $world->setAliveAt(50, 50);
-        $this->assertTrue($world->livingAt(50, 50));
+        $world->setAliveAt(5, 5);
+        $this->assertTrue($world->livingAt(5, 5));
         $this->assertFalse($world->livingAt(0, 0));
     }
 
