@@ -13,9 +13,9 @@ class WorldTest extends \PHPUnit_Framework_TestCase
 
     public function test_can_place_living_cell()
     {
+        $cell_factory = M::mock('Laraconway\\Purist\\CellFactory');
         $living_cell = M::mock('Laraconway\\Purist\\LivingCell');
         $dead_cell = M::mock('Laraconway\\Purist\\DeadCell');
-        $cell_factory = M::mock('Laraconway\\Purist\\CellFactory');
 
         $cell_factory->shouldReceive('dead')->andReturn($dead_cell);
         $cell_factory->shouldReceive('alive')->andReturn($living_cell)->once();
