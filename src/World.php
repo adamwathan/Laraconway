@@ -49,18 +49,7 @@ class World
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
         $cell = $this->positions[$x][$y];
-
-        if ($cell->isAlive() && $livingNeighbours < 2) {
-            return Cell::dead();
-        }
-        if ($cell->isAlive() && $livingNeighbours > 3) {
-            return Cell::dead();
-        }
-        if ($cell->isDead() && $livingNeighbours != 3) {
-            return Cell::dead();
-        }
-
-        return Cell::alive();
+        return $cell->aliveInNextRound($livingNeighbours) ? Cell::alive() : Cell::dead();
     }
 
     protected function countLivingNeighbours($x, $y)
