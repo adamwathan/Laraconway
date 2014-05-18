@@ -47,19 +47,23 @@ class World
 
     public function tick()
     {
-        $newWorld = [];
-        foreach($this->positions as $x => $row) {
-            foreach($row as $y => $cell) {
-                $newWorld[$x][$y] = $this->nextStateAt($x, $y);
+        $new_world = [];
+        foreach ($this->positions as $x => $row) {
+            foreach ($row as $y => $cell) {
+                if ($this->aliveInNextRound($x, $y)) {
+                    $new_world[$x][$y] = $this->cell_factory->alive();
+                } else {
+                    $new_world[$x][$y] = $this->cell_factory->dead();
+                }
             }
         }
-        $this->positions = $newWorld;
+        $this->positions = $new_world;
     }
 
-    protected function nextStateAt($x, $y)
+    protected function aliveInNextRound($x, $y)
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
-        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours) ?  $this->cell_factory->alive() :  $this->cell_factory->dead();
+        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours);
     }
 
     protected function getCell($x, $y)
