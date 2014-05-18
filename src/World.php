@@ -15,14 +15,14 @@ final class World
 
         for ($x = 0; $x < $rows; $x++) {
             for ($y = 0; $y < $columns; $y++) {
-                $this->positions[$x][$y] = Cell::dead();
+                $this->positions[$x][$y] = false;
             }
         }
     }
 
     public function setAliveAt($x, $y)
     {
-        $this->positions[$x][$y] = Cell::alive();
+        $this->positions[$x][$y] = true;
     }
 
     public function livingAt($x, $y)
@@ -31,7 +31,7 @@ final class World
             return false;
         }
 
-        return $this->positions[$x][$y]->isAlive();
+        return $this->positions[$x][$y];
     }
 
     public function tick()
@@ -49,7 +49,18 @@ final class World
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
         $cell = $this->positions[$x][$y];
-        return $cell->nextState($livingNeighbours);
+
+        if ($cell && $livingNeighbours < 2) {
+            return false;
+        }
+        if ($cell && $livingNeighbours > 3) {
+            return false;
+        }
+        if (! $cell && $livingNeighbours != 3) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function countLivingNeighbours($x, $y)
@@ -73,10 +84,10 @@ final class World
         foreach ($this->positions as $row) {
             $rowRep = [];
             foreach ($row as $cell) {
-                 $rowRep[] = $cell->isAlive() ? "X" : " ";
-            }
-            $serialized[] = $rowRep;
-        }
-        return $serialized;
-    }
+               $rowRep[] = $cell ? "X" : " ";
+           }
+           $serialized[] = $rowRep;
+       }
+       return $serialized;
+   }
 }
