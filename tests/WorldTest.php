@@ -25,7 +25,7 @@ class WorldTest extends \PHPUnit_Framework_TestCase
     public function test_live_cell_with_two_or_three_live_neighbours_lives()
     {
         $world = new World;
-        $world->setAliveAt(1, 1); //cut
+        $world->setAliveAt(1, 1);
         $world->setAliveAt(0, 1);
         $world->setAliveAt(1, 0);
         $world->tick();
@@ -35,7 +35,7 @@ class WorldTest extends \PHPUnit_Framework_TestCase
     public function test_live_cell_with_more_than_three_live_neighbours_dies()
     {
         $world = new World;
-        $world->setAliveAt(1, 1); //cut
+        $world->setAliveAt(1, 1);
         $world->setAliveAt(0, 1);
         $world->setAliveAt(1, 0);
         $world->setAliveAt(0, 0);
