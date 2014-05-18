@@ -15,7 +15,7 @@ class World
 
         for ($x = 0; $x < $rows; $x++) {
             for ($y = 0; $y < $columns; $y++) {
-                $this->positions[$x][$y] = Cell::dead();
+                $this->setDeadAt($x, $y);
             }
         }
     }
@@ -25,12 +25,16 @@ class World
         $this->positions[$x][$y] = Cell::alive();
     }
 
+    public function setDeadAt($x, $y)
+    {
+        $this->positions[$x][$y] = Cell::dead();
+    }
+
     public function livingAt($x, $y)
     {
         if ($x < 0 || $y < 0 || $x > $this->numRows - 1  || $y > $this->numColumns - 1) {
             return false;
         }
-
         return $this->positions[$x][$y] == Cell::alive();
     }
 
@@ -48,8 +52,12 @@ class World
     protected function nextStateAt($x, $y)
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
-        $cell = $this->positions[$x][$y];
-        return $cell->aliveInNextRound($livingNeighbours) ? Cell::alive() : Cell::dead();
+        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours) ? Cell::alive() : Cell::dead();
+    }
+
+    protected function getCell($x, $y)
+    {
+        return $this->positions[$x][$y];
     }
 
     protected function countLivingNeighbours($x, $y)
@@ -63,7 +71,6 @@ class World
                 $livingNeighbours += $this->livingAt($x+$i, $y+$j) ? 1 : 0;
             }
         }
-
         return $livingNeighbours;
     }
 
