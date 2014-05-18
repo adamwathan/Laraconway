@@ -2,7 +2,7 @@
 
 namespace Laraconway;
 
-final class Cell
+class Cell
 {
     protected $state = false;
 
