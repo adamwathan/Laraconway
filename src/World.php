@@ -4,11 +4,11 @@ namespace Laraconway;
 
 final class World
 {
-    protected $positions; 
+    protected $positions = [];
     protected $numRows;
     protected $numColumns;
 
-    protected function __construct($rows, $columns)
+    public function __construct($rows = 100, $columns = 100)
     {
         $this->numRows = $rows;
         $this->numColumns = $columns;
@@ -20,12 +20,7 @@ final class World
         }
     }
 
-    public static function create($rows = 100, $columns = 100)
-    {
-        return new self($rows, $columns);
-    }
-
-    public function placeLivingCell($x, $y)
+    public function setAliveAt($x, $y)
     {
         $this->positions[$x][$y] = Cell::alive();
     }
