@@ -2,7 +2,7 @@
 
 namespace Laraconway;
 
-final class World
+class World
 {
     protected $positions = [];
     protected $numRows;
