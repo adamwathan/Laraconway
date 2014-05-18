@@ -15,14 +15,14 @@ final class World
 
         for ($x = 0; $x < $rows; $x++) {
             for ($y = 0; $y < $columns; $y++) {
-                $this->positions[$x][$y] = false;
+                $this->positions[$x][$y] = Cell::dead();
             }
         }
     }
 
     public function setAliveAt($x, $y)
     {
-        $this->positions[$x][$y] = true;
+        $this->positions[$x][$y] = Cell::alive();
     }
 
     public function livingAt($x, $y)
@@ -31,7 +31,7 @@ final class World
             return false;
         }
 
-        return $this->positions[$x][$y];
+        return $this->positions[$x][$y] == Cell::alive();
     }
 
     public function tick()
@@ -51,16 +51,16 @@ final class World
         $cell = $this->positions[$x][$y];
 
         if ($cell && $livingNeighbours < 2) {
-            return false;
+            return Cell::dead();
         }
         if ($cell && $livingNeighbours > 3) {
-            return false;
+            return Cell::dead();
         }
         if (! $cell && $livingNeighbours != 3) {
-            return false;
+            return Cell::dead();
         }
 
-        return true;
+        return Cell::alive();
     }
 
     protected function countLivingNeighbours($x, $y)
