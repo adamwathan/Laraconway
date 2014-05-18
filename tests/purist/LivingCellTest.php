@@ -1,16 +1,9 @@
 <?php
 
-namespace Laraconway\Purist;
-
-use Mockery as M;
+namespace Laraconway\V6;
 
 class LivingCellTest extends \PHPUnit_Framework_TestCase
 {
-    public function tearDown()
-    {
-        M::close();
-    }
-
     public function test_live_cell_with_fewer_than_two_live_neighbours_dies()
     {
         $cell = new LivingCell;
