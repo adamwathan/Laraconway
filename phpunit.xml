@@ -6,10 +6,10 @@ bootstrap="./vendor/autoload.php"
         <testsuite name="All">
             <directory>./tests/</directory>
         </testsuite>
-        <testsuite name="purist">
+        <testsuite name="pure">
             <directory>./tests/purist</directory>
         </testsuite>
-        <testsuite name="pragmatic">
+        <testsuite name="prag">
             <directory>./tests/pragmatic</directory>
         </testsuite>
     </testsuites>
