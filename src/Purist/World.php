@@ -22,8 +22,11 @@ class World
         }
     }
 
-    public static function create($cell_factory, $rows = 25, $columns = 25)
+    public static function create($cell_factory = null, $rows = 25, $columns = 25)
     {
+        if (is_null($cell_factory)) {
+            $cell_factory = new CellFactory;
+        }
         return new static($cell_factory, $rows, $columns);
     }
 
