@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Four;
+namespace Laraconway\V3;
 
 class Cell
 {
@@ -29,19 +29,5 @@ class Cell
     public function isDead()
     {
         return ! $this->isAlive();
-    }
-
-    public function aliveInNextRound($livingNeighbours)
-    {
-        if ($this->isAlive() && $livingNeighbours < 2) {
-            return false;
-        }
-        if ($this->isAlive() && $livingNeighbours > 3) {
-            return false;
-        }
-        if ($this->isDead() && $livingNeighbours != 3) {
-            return false;
-        }
-        return true;
     }
 }

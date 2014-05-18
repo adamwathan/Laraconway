@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Pragmatic;
+namespace Laraconway\V6;
 
 class Window
 {

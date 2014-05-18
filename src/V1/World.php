@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Five;
+namespace Laraconway\V1;
 
 class World
 {
@@ -8,14 +8,14 @@ class World
     protected $numRows;
     protected $numColumns;
 
-    public function __construct($rows = 100, $columns = 100)
+    protected function __construct($rows = 100, $columns = 100)
     {
         $this->numRows = $rows;
         $this->numColumns = $columns;
 
         for ($x = 0; $x < $rows; $x++) {
             for ($y = 0; $y < $columns; $y++) {
-                $this->setDeadAt($x, $y);
+                $this->positions[$x][$y] = false;
             }
         }
     }
@@ -27,12 +27,7 @@ class World
 
     public function setAliveAt($x, $y)
     {
-        $this->positions[$x][$y] = Cell::alive();
-    }
-
-    public function setDeadAt($x, $y)
-    {
-        $this->positions[$x][$y] = Cell::dead();
+        $this->positions[$x][$y] = true;
     }
 
     public function livingAt($x, $y)
@@ -40,7 +35,8 @@ class World
         if ($x < 0 || $y < 0 || $x > $this->numRows - 1  || $y > $this->numColumns - 1) {
             return false;
         }
-        return $this->positions[$x][$y] == Cell::alive();
+
+        return $this->positions[$x][$y];
     }
 
     public function tick()
@@ -57,12 +53,19 @@ class World
     protected function nextStateAt($x, $y)
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
-        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours) ? Cell::alive() : Cell::dead();
-    }
+        $cell = $this->positions[$x][$y];
 
-    protected function getCell($x, $y)
-    {
-        return $this->positions[$x][$y];
+        if ($cell && $livingNeighbours < 2) {
+            return false;
+        }
+        if ($cell && $livingNeighbours > 3) {
+            return false;
+        }
+        if (! $cell && $livingNeighbours != 3) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function countLivingNeighbours($x, $y)
@@ -76,6 +79,7 @@ class World
                 $livingNeighbours += $this->livingAt($x+$i, $y+$j) ? 1 : 0;
             }
         }
+
         return $livingNeighbours;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Two;
+namespace Laraconway\V2;
 
 class Cell
 {

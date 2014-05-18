@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Three;
+namespace Laraconway\V3;
 
 class World
 {

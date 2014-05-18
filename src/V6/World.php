@@ -1,33 +1,43 @@
 <?php
 
-namespace Laraconway\One;
+namespace Laraconway\V6;
 
 class World
 {
     protected $positions = [];
     protected $numRows;
     protected $numColumns;
+    protected $cell_factory;
 
-    protected function __construct($rows = 100, $columns = 100)
+    protected function __construct($rows, $columns, $cell_factory)
     {
         $this->numRows = $rows;
         $this->numColumns = $columns;
+        $this->cell_factory = $cell_factory;
 
         for ($x = 0; $x < $rows; $x++) {
             for ($y = 0; $y < $columns; $y++) {
-                $this->positions[$x][$y] = false;
+                $this->setDeadAt($x, $y);
             }
         }
     }
 
-    public static function create($rows = 25, $columns = 25)
+    public static function create($rows = 25, $columns = 25, $cell_factory = null)
     {
-        return new self($rows, $columns);
+        if (is_null($cell_factory)) {
+            $cell_factory = new CellFactory;
+        }
+        return new static($rows, $columns, $cell_factory);
     }
 
     public function setAliveAt($x, $y)
     {
-        $this->positions[$x][$y] = true;
+        $this->positions[$x][$y] = $this->cell_factory->alive();
+    }
+
+    public function setDeadAt($x, $y)
+    {
+        $this->positions[$x][$y] =  $this->cell_factory->dead();
     }
 
     public function livingAt($x, $y)
@@ -35,8 +45,7 @@ class World
         if ($x < 0 || $y < 0 || $x > $this->numRows - 1  || $y > $this->numColumns - 1) {
             return false;
         }
-
-        return $this->positions[$x][$y];
+        return $this->getCell($x, $y)->isAlive();
     }
 
     public function tick()
@@ -53,19 +62,12 @@ class World
     protected function nextStateAt($x, $y)
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
-        $cell = $this->positions[$x][$y];
+        return $this->getCell($x, $y)->aliveInNextRound($livingNeighbours) ?  $this->cell_factory->alive() :  $this->cell_factory->dead();
+    }
 
-        if ($cell && $livingNeighbours < 2) {
-            return false;
-        }
-        if ($cell && $livingNeighbours > 3) {
-            return false;
-        }
-        if (! $cell && $livingNeighbours != 3) {
-            return false;
-        }
-
-        return true;
+    protected function getCell($x, $y)
+    {
+        return $this->positions[$x][$y];
     }
 
     protected function countLivingNeighbours($x, $y)
@@ -79,7 +81,6 @@ class World
                 $livingNeighbours += $this->livingAt($x+$i, $y+$j) ? 1 : 0;
             }
         }
-
         return $livingNeighbours;
     }
 

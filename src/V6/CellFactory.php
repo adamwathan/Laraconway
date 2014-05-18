@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Purist;
+namespace Laraconway\V6;
 
 class CellFactory
 {

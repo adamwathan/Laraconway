@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Four;
+namespace Laraconway\V2;
 
 class World
 {
@@ -54,7 +54,18 @@ class World
     {
         $livingNeighbours = $this->countLivingNeighbours($x, $y);
         $cell = $this->positions[$x][$y];
-        return $cell->aliveInNextRound($livingNeighbours) ? Cell::alive() : Cell::dead();
+
+        if ($cell && $livingNeighbours < 2) {
+            return Cell::dead();
+        }
+        if ($cell && $livingNeighbours > 3) {
+            return Cell::dead();
+        }
+        if (! $cell && $livingNeighbours != 3) {
+            return Cell::dead();
+        }
+
+        return Cell::alive();
     }
 
     protected function countLivingNeighbours($x, $y)

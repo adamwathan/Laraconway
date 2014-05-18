@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Pragmatic;
+namespace Laraconway\V5;
 
 class LivingCell extends Cell
 {

@@ -1,21 +1,21 @@
 <?php
 
-namespace Laraconway\Five;
+namespace Laraconway\V6;
 
-class DeadCell extends Cell
+class LivingCell extends Cell
 {
     public function isAlive()
-    {
-        return false;
-    }
-
-    public function isDead()
     {
         return true;
     }
 
+    public function isDead()
+    {
+        return false;
+    }
+
     public function aliveInNextRound($livingNeighbours)
     {
-        return $livingNeighbours === 3;
+        return $livingNeighbours >= 2 && $livingNeighbours <= 3;
     }
 }

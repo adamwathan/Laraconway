@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Five;
+namespace Laraconway\V5;
 
 abstract class Cell
 {
