@@ -78,7 +78,7 @@ class World
                 if ($i == 0 && $j == 0) {
                     continue;
                 }
-                $livingNeighbours += $this->livingAt($x+$i, $y+$j) ? 1 : 0;
+                $livingNeighbours += $this->livingAt($x + $i, $y + $j) ? 1 : 0;
             }
         }
         return $livingNeighbours;
