@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway;
+namespace Laraconway\Pragmatic;
 
 class DeadCell extends Cell
 {

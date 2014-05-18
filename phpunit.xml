@@ -7,10 +7,10 @@ bootstrap="./vendor/autoload.php"
             <directory>./tests/</directory>
         </testsuite>
         <testsuite name="purist">
-            <directory>./tests/bad</directory>
+            <directory>./tests/purist</directory>
         </testsuite>
         <testsuite name="pragmatic">
-            <directory>./tests/good</directory>
+            <directory>./tests/pragmatic</directory>
         </testsuite>
     </testsuites>
 </phpunit>
