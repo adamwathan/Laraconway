@@ -1,6 +1,6 @@
 <?php
 
-namespace Laraconway\Four;
+namespace Laraconway\Five;
 
 class WorldTest extends \PHPUnit_Framework_TestCase
 {
