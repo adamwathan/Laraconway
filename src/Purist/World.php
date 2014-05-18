@@ -9,7 +9,7 @@ class World
     protected $numColumns;
     protected $cell_factory;
 
-    public function __construct($rows, $columns, $cell_factory)
+    public function __construct($cell_factory, $rows = 25, $columns = 25)
     {
         $this->numRows = $rows;
         $this->numColumns = $columns;
@@ -22,9 +22,9 @@ class World
         }
     }
 
-    public static function create($rows, $columns, $cell_factory)
+    public static function create($cell_factory, $rows = 25, $columns = 25)
     {
-        return new static($rows, $columns, $cell_factory);
+        return new static($cell_factory, $rows, $columns);
     }
 
     public function setAliveAt($x, $y)

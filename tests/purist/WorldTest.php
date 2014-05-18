@@ -23,7 +23,7 @@ class WorldTest extends \PHPUnit_Framework_TestCase
         $dead_cell->shouldReceive('isAlive')->andReturn(false);
         $living_cell->shouldReceive('isAlive')->andReturn(true)->once();
 
-        $world = World::create(25, 25, $cell_factory);
+        $world = World::create($cell_factory, 25, 25);
         $world->setAliveAt(5, 5);
         $this->assertTrue($world->livingAt(5, 5));
         $this->assertFalse($world->livingAt(0, 0));
