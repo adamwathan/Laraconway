@@ -1,7 +1,6 @@
 <?php
 
-namespace Laraconway\V7;
-
+namespace Laraconway\V8;
 class WorldTest extends \PHPUnit_Framework_TestCase
 {
     public function test_can_place_living_cell()
